@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+apistar = {version = "~=0.5", extras = ["asyncio"]}
+mongoengine = "*"
+pendulum = "*"
+awesome-slugify = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
