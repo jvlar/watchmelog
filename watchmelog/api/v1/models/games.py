@@ -1,4 +1,11 @@
-from mongoengine import Document, IntField, StringField, BooleanField, ListField, ReferenceField
+from mongoengine import (
+    Document,
+    IntField,
+    StringField,
+    BooleanField,
+    ListField,
+    ReferenceField,
+)
 from typing import List
 
 from watchmelog.api.v1.models.players import Player
@@ -21,7 +28,7 @@ MAP_CHOICES = [
     "Route 66",
     "Temple of Anubis",
     "Volskaya Industry",
-    "Watchpoint: Gibraltar"
+    "Watchpoint: Gibraltar",
 ]
 
 HERO_CHOICES = [
@@ -51,7 +58,7 @@ HERO_CHOICES = [
     "Hanzo",
     "Mei",
     "Symmetra",
-    "Torbjorn"
+    "Torbjorn",
 ]
 
 
