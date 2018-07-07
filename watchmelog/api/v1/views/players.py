@@ -19,13 +19,13 @@ def register_player(player: RegisterPlayer) -> dict:
     Register a new Overwatch player.
     """
     player.password = hash_pass(player.password.encode("utf-8"))
-    new_player = Player(**player)
-    try:
-        new_player.save()
-    except NotUniqueError:
+    if Player.objects(battletag=player.battletag):
         raise BadRequest(
             detail=f"A player with the battletag {player.battletag} already exists."
         )
+
+    new_player = Player(**player)
+    new_player.save()
 
     return mongo_to_dict(new_player)
 

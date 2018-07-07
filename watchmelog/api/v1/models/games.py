@@ -1,4 +1,3 @@
-import pendulum
 from mongoengine import (
     Document,
     IntField,
@@ -11,7 +10,7 @@ from mongoengine import (
 )
 from typing import List
 
-from watchmelog.api.utils import update_timestamp
+from watchmelog.api.utils import update_timestamp, utcnow
 from watchmelog.api.v1.models.players import Player
 
 MAP_CHOICES = [
@@ -78,7 +77,7 @@ class Game(Document):
     leaver_team: bool = BooleanField(default=False)
     leaver_enemy_team: bool = BooleanField(default=False)
     group_with: List[str] = ListField(field=StringField())
-    created_at = DateTimeField(default=pendulum.now("UTC"))
+    created_at = DateTimeField(default=utcnow)
     updated_at = DateTimeField()
 
 

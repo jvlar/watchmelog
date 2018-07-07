@@ -5,7 +5,7 @@ from watchmelog.api.v1.models.games import MAP_CHOICES, HERO_CHOICES
 
 
 class LogGame(types.Type):
-    player_slug: str = validators.String()
+    player: str = validators.String(description="Player slug.")
     season: int = validators.Number(1, 11)
     sr: int = validators.Number(0, 5000)
     map: str = validators.String(enum=MAP_CHOICES, allow_null=True)

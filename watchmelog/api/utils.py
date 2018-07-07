@@ -63,5 +63,9 @@ def mongo_to_dict(obj, black_list: List = None):
     return dict(return_data)
 
 
+def utcnow():
+    return pendulum.now("UTC")
+
+
 def update_timestamp(sender, document, **kwargs):
-    document.updated_at = pendulum.now("UTC")
+    document.updated_at = utcnow()
