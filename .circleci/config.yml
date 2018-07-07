@@ -13,6 +13,12 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Setup Env
+          command: |
+            echo 'export PATH=$PATH:/home/circleci/.local/bin' >> $BASH_ENV
+            sudo chmod 777 -R /usr/local/bin
+
       # Download and cache dependencies
       - restore_cache:
           keys:
