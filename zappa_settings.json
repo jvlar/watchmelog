@@ -10,6 +10,7 @@
             "OAUTH_CLIENT_ID": "tq65scke26cqvhmxad5w9j5eqqwpd6zq",
             "OAUTH_REDIRECT_URI": "https://dev.imatruck.net/registration"
         },
+        "memory_size": 128,
         "domain": "dev.imatruck.net"
     }
 }
