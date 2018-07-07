@@ -14,3 +14,7 @@ class Player(Document):
     def __init__(self, *args, **kwargs):
         super(Player, self).__init__(*args, **kwargs)
         self.slug = slugify(self.battletag)
+
+
+class ApiKey(Document):
+    player_id =

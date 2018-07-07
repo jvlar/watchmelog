@@ -1,4 +1,3 @@
-import ujson
 from apistar import types, validators
 from apistar.exceptions import BadRequest
 from mongoengine import NotUniqueError
@@ -28,7 +27,7 @@ def register_player(player: RegisterPlayer) -> dict:
     new_player = Player(**player)
     try:
         new_player.save()
-    except NotUniqueError as exc:
+    except NotUniqueError:
         raise BadRequest(
             detail=f"A player with the battletag {player.battletag} already exists."
         )
