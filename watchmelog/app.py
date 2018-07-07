@@ -1,20 +1,33 @@
 import os
 
-from apistar import App, Include
+from apistar import App, Include, Route
 from apistar_cors_hooks import CORSRequestHooks
 from mongoengine import connect
 
+from watchmelog import pages
 from watchmelog.api import v1
 from watchmelog.api.v1.auth import AuthComponent
+
+
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
+
 
 if "MONGO_CONN_STR" in os.environ:
     connect(os.environ["MONGO_CONN_STR"])
 else:
     connect("watchmelog")
 
-routes = [Include("/v1/players", name="v1 players", routes=v1.routes)]
+routes = [
+    Route("/", method="GET", handler=pages.index),
+    Include("/v1/players", name="v1 players", routes=v1.routes),
+]
 
-app = App(routes=routes, components=[AuthComponent()], event_hooks=[CORSRequestHooks()])
+app = App(
+    routes=routes,
+    components=[AuthComponent()],
+    event_hooks=[CORSRequestHooks()],
+    template_dir=TEMPLATE_DIR,
+)
 
 if __name__ == "__main__":
     host = os.environ.get("API_HOST", "127.0.0.1")
