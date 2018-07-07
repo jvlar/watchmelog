@@ -1,6 +1,7 @@
 import bcrypt
-from apistar import Route
+from apistar import Route, http
 from apistar.exceptions import BadRequest, NotFound, Forbidden
+from typing import List
 
 from watchmelog.utils import hash_pass, mongo_to_dict
 from watchmelog.api.v1.models.games import Game
@@ -34,9 +35,8 @@ def generate_api_key(player_slug: str, login_payload: Login) -> dict:
     Generate a new API Key for the player.
     If an old key already exist, it will be deleted.
     """
-    try:
-        player = Player.objects(slug=player_slug)[0]
-    except IndexError:
+    player = Player.objects(slug=player_slug).first()
+    if not player:
         raise NotFound(f"Player {player_slug} not found.")
 
     if (
@@ -65,11 +65,38 @@ def log_game(
     new_game_payload: LogGame,
 ) -> dict:
     """
-    Log a new game in the system
+    Log a new game in the system.
     """
-    new_game = Game(**new_game_payload)
+    new_game = Game(
+        **{
+            **new_game_payload,
+            **{"platform": platform, "region": region, "player": player_slug},
+        }
+    )
     new_game.save()
     return mongo_to_dict(new_game)
+
+
+def list_player_games(
+    auth_player: Player, player_slug: str, filters: http.QueryParams
+) -> List[dict]:
+
+    dict_filters = dict(filters)
+
+    if dict_filters.get("player", player_slug) != player_slug:
+        raise Forbidden(
+            f"Cannot list games filtered on player {dict_filters['player']}"
+        )
+
+    order = dict_filters.pop("order", "asc")
+    order_by = dict_filters.pop("order_by", "created_at")
+
+    games = (
+        Game.objects(**dict_filters)
+        .order_by(f"{'-' if order == 'desc' else ''}{order_by}")
+        .all()
+    )
+    return [mongo_to_dict(g) for g in games]
 
 
 routes = [
@@ -83,5 +110,11 @@ routes = [
         "POST",
         log_game,
         name="Log a new game",
+    ),
+    Route(
+        "/{player_slug}/games",
+        "GET",
+        list_player_games,
+        name="List all games for player.",
     ),
 ]
