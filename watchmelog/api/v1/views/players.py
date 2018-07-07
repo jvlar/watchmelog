@@ -1,4 +1,5 @@
 import bcrypt
+from apistar import Route
 from apistar.exceptions import BadRequest, NotFound, Forbidden
 from mongoengine import NotUniqueError
 
@@ -55,3 +56,12 @@ def generate_api_key(player_slug: str, login_payload: Login) -> dict:
     new_api_key = ApiKey(player=player)
     new_api_key.save()
     return mongo_to_dict(new_api_key)
+
+
+routes = [
+    Route("/{player_slug}", "GET", get_player, name="Get Player's information"),
+    Route("", "POST", register_player, name="Register Player"),
+    Route(
+        "/{player_slug}/apikey", "POST", generate_api_key, name="Generate new API Key"
+    ),
+]

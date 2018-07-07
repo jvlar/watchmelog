@@ -14,7 +14,7 @@ class Player(Document):
     password = StringField(required=True)
     platform = StringField(required=True, choices=PLATFORM_CHOICES)
     region = StringField(required=True, choices=REGION_CHOICES)
-    slug = StringField()
+    slug = StringField(primary_key=True)
     created_at = DateTimeField(default=pendulum.now("UTC"))
 
     def __init__(self, *args, **kwargs):

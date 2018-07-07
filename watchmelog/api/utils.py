@@ -1,4 +1,5 @@
 import bcrypt
+import pendulum
 from mongoengine import (
     Document,
     DateTimeField,
@@ -8,6 +9,7 @@ from mongoengine import (
     ListField,
     EmbeddedDocumentField,
     ObjectIdField,
+    ReferenceField,
 )
 from typing import List
 
@@ -55,5 +57,11 @@ def mongo_to_dict(obj, black_list: List = None):
 
         elif isinstance(obj._fields[field_name], ObjectIdField):
             return_data.append((field_name, str(data)))
+        elif isinstance(obj._fields[field_name], ReferenceField):
+            return_data.append((field_name, str(getattr(obj, field_name).pk)))
 
     return dict(return_data)
+
+
+def update_timestamp(sender, document, **kwargs):
+    document.updated_at = pendulum.now("UTC")
