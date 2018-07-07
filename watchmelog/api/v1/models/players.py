@@ -1,5 +1,6 @@
 import pendulum as pendulum
-from mongoengine import Document, StringField, DateTimeField
+import secrets
+from mongoengine import Document, StringField, DateTimeField, ReferenceField
 from slugify import slugify
 
 
@@ -14,3 +15,8 @@ class Player(Document):
     def __init__(self, *args, **kwargs):
         super(Player, self).__init__(*args, **kwargs)
         self.slug = slugify(self.battletag)
+
+
+class ApiKey(Document):
+    player = ReferenceField(Player)
+    key = StringField(default=secrets.token_urlsafe(16))

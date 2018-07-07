@@ -1,9 +1,9 @@
 from apistar import types, validators
-from apistar.exceptions import BadRequest
+from apistar.exceptions import BadRequest, NotFound
 from mongoengine import NotUniqueError
 
 from watchmelog.api.utils import hash_pass, mongo_to_dict
-from watchmelog.api.v1.models.players import Player
+from watchmelog.api.v1.models.players import Player, ApiKey
 
 
 class RegisterPlayer(types.Type):
@@ -32,4 +32,19 @@ def register_player(player: RegisterPlayer) -> dict:
             detail=f"A player with the battletag {player.battletag} already exists."
         )
 
-    return mongo_to_dict(new_player, black_list=['password'])
+    return mongo_to_dict(new_player, black_list=["password"])
+
+
+def generate_api_key(player_slug: str) -> dict:
+    try:
+        player = Player.objects(slug=player_slug)[0]
+    except IndexError:
+        raise NotFound(f"Player {player_slug} not found.")
+
+    old_api_key = ApiKey.objects(player=player)
+    if old_api_key:
+        for key in old_api_key:
+            key.delete()
+    new_api_key = ApiKey(player=player)
+    new_api_key.save()
+    return mongo_to_dict(new_api_key)
