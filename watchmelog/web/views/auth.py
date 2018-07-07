@@ -49,6 +49,9 @@ def registration_redirect(code: http.QueryParam, state: http.QueryParam):
     )
     session_state.delete()
 
+    # Profile URL: GET https://us.api.battle.net/account/user?access_token=TOKEN
+    # >>> {"battletag": ..., "id": ...}
+
     # Call Blizzard to get player info
     # Create player model
 
