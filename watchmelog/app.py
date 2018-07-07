@@ -16,7 +16,7 @@ if "MONGO_DB_NAME" in os.environ:
         os.environ["MONGO_DB_NAME"],
         alias="default",
         host=os.environ.get("MONGO_HOST"),
-        port=os.environ.get("MONGO_PORT"),
+        port=int(os.environ.get("MONGO_PORT")),
         username=os.environ.get("MONGO_USER"),
         password=os.environ.get("MONGO_PASS"),
     )
