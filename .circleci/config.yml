@@ -19,13 +19,12 @@ jobs:
             echo 'export PATH=$PATH:/home/circleci/.local/bin' >> $BASH_ENV
             sudo chmod 777 -R /usr/local/bin
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "pyproject.lock" }}
 
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: |
             make bootstrap
             make install
@@ -36,6 +35,49 @@ jobs:
           key: v1-dependencies-{{ checksum "pyproject.lock" }}
 
       - run:
-          name: lint
+          name: Lint
           command: |
             make lint
+
+  deploy-dev:
+      - checkout
+
+      - run:
+          name: Setup Env
+          command: |
+            echo 'export PATH=$PATH:/home/circleci/.local/bin' >> $BASH_ENV
+            sudo chmod 777 -R /usr/local/bin
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "pyproject.lock" }}
+
+      - run:
+          name: Install Dependencies
+          command: |
+            make bootstrap
+            make install
+
+      - save_cache:
+          paths:
+            - /home/circleci/.cache/pypoetry/virtualenvs/watchmelog-py3.6
+          key: v1-dependencies-{{ checksum "pyproject.lock" }}
+
+      - run:
+          name: Deploy to Lambda
+          command: |
+            source /home/circleci/.cache/pypoetry/virtualenvs/watchmelog-py3.6/bin/activate
+            zappa update dev
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - deploy-dev:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
