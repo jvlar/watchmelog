@@ -5,6 +5,8 @@ from slugify import slugify
 
 
 class Player(Document):
+    _black_list = ["password"]
+
     battletag = StringField(required=True, unique=True)
     password = StringField(required=True)
     platform = StringField(required=True)
@@ -18,5 +20,7 @@ class Player(Document):
 
 
 class ApiKey(Document):
-    player = ReferenceField(Player)
-    key = StringField(default=secrets.token_urlsafe(16))
+    _black_list = ["id"]
+
+    player: Player = ReferenceField(Player)
+    key: str = StringField(default=secrets.token_urlsafe(32))

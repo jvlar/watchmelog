@@ -23,10 +23,11 @@ def mongo_to_dict(obj, black_list: List = None):
     """
 
     if not black_list:
-        black_list = []
+        black_list = getattr(obj, "_black_list", [])
+
     return_data = []
 
-    if isinstance(obj, Document):
+    if isinstance(obj, Document) and not "id" in black_list:
         return_data.append(("id", str(obj.id)))
 
     for field_name in obj._fields:
