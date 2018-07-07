@@ -32,7 +32,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ./.venv
+            - /home/circleci/.cache/pypoetry/virtualenvs/watchmelog-py3.6
           key: v1-dependencies-{{ checksum "pyproject.lock" }}
 
       - run:
