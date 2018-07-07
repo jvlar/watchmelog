@@ -11,7 +11,7 @@ from mongoengine import (
 from typing import List
 
 from watchmelog.utils import update_timestamp, utcnow
-from watchmelog.api.v1.models.players import Player
+from watchmelog.api.v1.models.players import Player, PLATFORM_CHOICES, REGION_CHOICES
 
 MAP_CHOICES = [
     "Blizzard World",
@@ -77,6 +77,8 @@ class Game(Document):
     leaver_team: bool = BooleanField(default=False)
     leaver_enemy_team: bool = BooleanField(default=False)
     group_with: List[str] = ListField(field=StringField())
+    platform = StringField(required=True, choices=PLATFORM_CHOICES)
+    region = StringField(required=True, choices=REGION_CHOICES)
     created_at = DateTimeField(default=utcnow)
     updated_at = DateTimeField()
 

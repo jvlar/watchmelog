@@ -3,13 +3,13 @@ from apistar import Route
 from apistar.exceptions import BadRequest, NotFound, Forbidden
 
 from watchmelog.utils import hash_pass, mongo_to_dict
+from watchmelog.api.v1.models.games import Game
 from watchmelog.api.v1.models.players import Player, ApiKey
+from watchmelog.api.v1.types.games import LogGame
 from watchmelog.api.v1.types.players import RegisterPlayer, Login
 
 
 def get_player(player_slug: str, auth_player: Player) -> dict:
-    if auth_player.slug != player_slug:
-        raise Forbidden("You cannot access that player.")
     return mongo_to_dict(auth_player)
 
 
@@ -57,10 +57,31 @@ def generate_api_key(player_slug: str, login_payload: Login) -> dict:
     return mongo_to_dict(new_api_key)
 
 
+def log_game(
+    auth_player: Player,
+    player_slug: str,
+    platform: str,
+    region: str,
+    new_game_payload: LogGame,
+) -> dict:
+    """
+    Log a new game in the system
+    """
+    new_game = Game(**new_game_payload)
+    new_game.save()
+    return mongo_to_dict(new_game)
+
+
 routes = [
     Route("/{player_slug}", "GET", get_player, name="Get Player's information"),
     Route("", "POST", register_player, name="Register Player"),
     Route(
         "/{player_slug}/apikey", "POST", generate_api_key, name="Generate new API Key"
+    ),
+    Route(
+        "/{player_slug}/{platform}/{region}/games",
+        "POST",
+        log_game,
+        name="Log a new game",
     ),
 ]

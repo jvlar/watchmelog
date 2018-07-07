@@ -1,12 +1,11 @@
 import os
-from apistar import App, Include, Route, Component, http
+from apistar import App, Include, Route
 from apistar_cors_hooks import CORSRequestHooks
 from mongoengine import connect
 
 from watchmelog import web, config
-from watchmelog.api.v1.auth import AuthComponent
-from watchmelog.api.v1.views import games as v1_games
 from watchmelog.api.v1.views import players as v1_players
+from watchmelog.api.v1.auth import AuthComponent
 
 config.load_config()
 
@@ -19,8 +18,7 @@ else:
 
 routes = [
     Route("/", method="GET", handler=web.index, documented=False),
-    Include("/v1/players", name="v1 Players", routes=v1_players.routes),
-    Include("/v1/games", name="v1 Games", routes=v1_games.routes),
+    Include("/v1/players", name="v1 Player", routes=v1_players.routes),
 ]
 
 app = App(

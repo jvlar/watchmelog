@@ -13,8 +13,8 @@ class Player(Document):
 
     battletag = StringField(required=True, unique=True)
     password = StringField(required=True)
-    platform = StringField(required=True, choices=PLATFORM_CHOICES)
-    region = StringField(required=True, choices=REGION_CHOICES)
+    default_platform = StringField(required=True, choices=PLATFORM_CHOICES)
+    default_region = StringField(required=True, choices=REGION_CHOICES)
     slug = StringField(primary_key=True)
     created_at = DateTimeField(default=utcnow)
 
