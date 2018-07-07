@@ -8,6 +8,8 @@ apistar = {version = "~=0.5", extras = ["asyncio"]}
 mongoengine = "*"
 pendulum = "*"
 awesome-slugify = "*"
+bcrypt = "*"
+ujson = "*"
 
 [dev-packages]
 
