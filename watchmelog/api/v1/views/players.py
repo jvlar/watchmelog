@@ -1,9 +1,8 @@
 import bcrypt
 from apistar import Route
 from apistar.exceptions import BadRequest, NotFound, Forbidden
-from mongoengine import NotUniqueError
 
-from watchmelog.api.utils import hash_pass, mongo_to_dict
+from watchmelog.utils import hash_pass, mongo_to_dict
 from watchmelog.api.v1.models.players import Player, ApiKey
 from watchmelog.api.v1.types.players import RegisterPlayer, Login
 

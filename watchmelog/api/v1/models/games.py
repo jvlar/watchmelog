@@ -10,7 +10,7 @@ from mongoengine import (
 )
 from typing import List
 
-from watchmelog.api.utils import update_timestamp, utcnow
+from watchmelog.utils import update_timestamp, utcnow
 from watchmelog.api.v1.models.players import Player
 
 MAP_CHOICES = [

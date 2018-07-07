@@ -2,7 +2,7 @@ import secrets
 from mongoengine import Document, StringField, DateTimeField, ReferenceField
 from slugify import slugify
 
-from watchmelog.api.utils import utcnow
+from watchmelog.utils import utcnow
 
 PLATFORM_CHOICES = ["PC", "XBOX", "PS4"]
 REGION_CHOICES = ["US", "EU", "ASIA"]

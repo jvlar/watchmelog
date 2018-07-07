@@ -1,6 +1,6 @@
 from apistar import Route
 
-from watchmelog.api.utils import mongo_to_dict
+from watchmelog.utils import mongo_to_dict
 from watchmelog.api.v1.models.games import Game
 from watchmelog.api.v1.types.games import LogGame
 
