@@ -12,14 +12,10 @@ _REGIONS = ["us", "eu", "apac"]
 _BASE_AUTHORIZE_URI = "https://{region}.battle.net/oauth/authorize"
 _BASE_TOKEN_URI = "https://{region}.battle.net/oauth/token"
 
-_STATE = None
-_REGION = None
-_TOKEN = None
-
 
 def oauth_login_redirect(region: http.QueryParam):
     if region not in _REGIONS:
-        abort(401, "region not valid")
+        abort(401, f"Region must be one of {_REGIONS}")
 
     base_auth_url = _BASE_AUTHORIZE_URI.format(region=region)
     blizzard = OAuth2Session(
