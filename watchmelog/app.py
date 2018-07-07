@@ -12,7 +12,11 @@ from watchmelog.api.v1.views import players as v1_players
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
 
 if "MONGO_CONN_STR" in os.environ:
-    connect(os.environ["MONGO_DB_NAME"], alias='watchmelog', host=os.environ["MONGO_CONN_STR"])
+    connect(
+        os.environ["MONGO_DB_NAME"],
+        alias="watchmelog",
+        host=os.environ["MONGO_CONN_STR"],
+    )
 else:
     connect("watchmelog")
 
