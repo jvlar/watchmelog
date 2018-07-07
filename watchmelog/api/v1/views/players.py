@@ -1,13 +1,15 @@
+import ujson
+from math import ceil
+
 import bcrypt
 from apistar import Route, http
 from apistar.exceptions import BadRequest, NotFound, Forbidden
-from typing import List
 
-from watchmelog.utils import hash_pass, mongo_to_dict
 from watchmelog.api.v1.models.games import Game
 from watchmelog.api.v1.models.players import Player, ApiKey
 from watchmelog.api.v1.types.games import LogGame
 from watchmelog.api.v1.types.players import RegisterPlayer, Login
+from watchmelog.utils import hash_pass, mongo_to_dict
 
 
 def get_player(player_slug: str, auth_player: Player) -> dict:
@@ -79,24 +81,43 @@ def log_game(
 
 def list_player_games(
     auth_player: Player, player_slug: str, filters: http.QueryParams
-) -> List[dict]:
+) -> dict:
+    limit = 10
 
-    dict_filters = dict(filters)
+    dict_filters = {}
+    for f, v in filters.items():
+        if "player" in f:
+            raise BadRequest("Cannot filter on player.")
 
-    if dict_filters.get("player", player_slug) != player_slug:
-        raise Forbidden(
-            f"Cannot list games filtered on player {dict_filters['player']}"
-        )
+        # Since we support MongoEngine filters, if we have a filter key with __ we
+        # have to parse the value of the filter as JSON.
+        if "__" in f:
+            v = ujson.loads(v.replace("'", '"'))
+
+        dict_filters[f] = v
 
     order = dict_filters.pop("order", "asc")
     order_by = dict_filters.pop("order_by", "created_at")
+    page = int(dict_filters.pop("page", 1))
+
+    offset = (page - 1) * limit
+    print(offset)
 
     games = (
         Game.objects(**dict_filters)
         .order_by(f"{'-' if order == 'desc' else ''}{order_by}")
+        .skip(offset)
+        .limit(limit)
         .all()
     )
-    return [mongo_to_dict(g) for g in games]
+    game_count = Game.objects(**dict_filters).count()
+    game_list = [mongo_to_dict(g) for g in games]
+    return {
+        "total": game_count,
+        "page": page,
+        "last_page": ceil(game_count / limit),
+        "games": game_list,
+    }
 
 
 routes = [
