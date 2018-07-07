@@ -2,7 +2,8 @@ default:
 	@echo 'o/'
 
 bootstrap:  ## Install required system packages for this project
-	pip install --user -U poetry awscli
+	pip install --user -U poetry awscli pre-commit
+	pre-commit install
 
 install: ## Install project deps
 	poetry install
