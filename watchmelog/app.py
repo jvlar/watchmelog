@@ -1,16 +1,17 @@
 import os
 
-from apistar import App, Include, Route
+from apistar import App, Include, Route, Component, http
 from apistar_cors_hooks import CORSRequestHooks
 from mongoengine import connect
 
-from watchmelog import pages
+from watchmelog import web, config
 from watchmelog.api import v1
 from watchmelog.api.v1.auth import AuthComponent
 
 
-TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
+config.load_config()
 
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
 
 if "MONGO_CONN_STR" in os.environ:
     connect(os.environ["MONGO_CONN_STR"])
@@ -18,7 +19,7 @@ else:
     connect("watchmelog")
 
 routes = [
-    Route("/", method="GET", handler=pages.index),
+    Route("/", method="GET", handler=web.index),
     Include("/v1/players", name="v1 players", routes=v1.routes),
 ]
 

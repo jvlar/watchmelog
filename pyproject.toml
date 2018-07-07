@@ -15,6 +15,8 @@ bcrypt = "^3.1"
 ujson = "^1.35"
 zappa = "^0.46.1"
 apistar_cors_hooks = "^0.1.1"
+requests-oauthlib = "^1.0"
+munch = "^2.3"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^18.3-alpha.0", allows-prereleases = true}

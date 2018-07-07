@@ -105,3 +105,6 @@ venv.bak/
 
 # IDEA
 .idea
+
+# App specific
+watchmelog/resources/config/local.yaml
