@@ -1,0 +1,6 @@
+https://localhost {
+    tls localhost.crt localhost.key
+    proxy / http://localhost:5000 {
+        transparent
+    }
+}
