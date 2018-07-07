@@ -1,5 +1,7 @@
 from apistar import types, validators
 
+from watchmelog.api.v1.models.players import PLATFORM_CHOICES, REGION_CHOICES
+
 
 class RegisterPlayer(types.Type):
     battletag: str = validators.String(description="Your Battle.net Tag")
@@ -7,10 +9,10 @@ class RegisterPlayer(types.Type):
         min_length=12, description="Password used to authenticate with the API."
     )
     platform: str = validators.String(
-        enum=["PC", "XBOX", "PS4"], description="Platform you're playing on."
+        enum=PLATFORM_CHOICES, description="Platform you're playing on."
     )
     region: str = validators.String(
-        enum=["US", "EU", "ASIA"], description="Region you're playing on."
+        enum=REGION_CHOICES, description="Region you're playing on."
     )
 
 

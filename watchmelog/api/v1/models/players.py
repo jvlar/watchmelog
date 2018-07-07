@@ -3,14 +3,17 @@ import secrets
 from mongoengine import Document, StringField, DateTimeField, ReferenceField
 from slugify import slugify
 
+PLATFORM_CHOICES = ["PC", "XBOX", "PS4"]
+REGION_CHOICES = ["US", "EU", "ASIA"]
+
 
 class Player(Document):
     _black_list = ["password"]
 
     battletag = StringField(required=True, unique=True)
     password = StringField(required=True)
-    platform = StringField(required=True)
-    region = StringField(required=True)
+    platform = StringField(required=True, choices=PLATFORM_CHOICES)
+    region = StringField(required=True, choices=REGION_CHOICES)
     slug = StringField()
     created_at = DateTimeField(default=pendulum.now("UTC"))
 
