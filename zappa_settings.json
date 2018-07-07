@@ -6,7 +6,10 @@
         "runtime": "python3.6",
         "s3_bucket": "dev-watchmelog",
         "remote_env": "s3://watchmelog-config/watchmelog-dev.json",
-        "environment_variables": {},
+        "environment_variables": {
+            "OAUTH_CLIENT_ID": "tq65scke26cqvhmxad5w9j5eqqwpd6zq",
+            "OAUTH_REDIRECT_URI": "https://dev.imatruck.net/registration"
+        },
         "domain": "dev.imatruck.net"
     }
 }

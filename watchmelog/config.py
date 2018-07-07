@@ -3,12 +3,9 @@ import copy
 import os
 from typing import Dict
 
+import munch
 import pkg_resources
 import yaml
-import munch
-
-
-app_config = None
 
 
 def _merge_dicts(base_dict: Dict, merged_dict: Dict) -> Dict:
@@ -25,19 +22,27 @@ def _merge_dicts(base_dict: Dict, merged_dict: Dict) -> Dict:
     return new_dict
 
 
-def load_config():
-    base_config_dir = pkg_resources.resource_filename(
-        "watchmelog", os.path.join("resources", "config")
-    )
-    base_config_file = os.path.join(base_config_dir, "config.yaml")
-    local_config_file = os.path.join(base_config_dir, "local.yaml")
+base_config_dir = pkg_resources.resource_filename(
+    "watchmelog", os.path.join("resources", "config")
+)
+base_config_file = os.path.join(base_config_dir, "config.yaml")
+local_config_file = os.path.join(base_config_dir, "local.yaml")
 
-    with open(base_config_file, mode="r") as base_config:
-        config_dict = yaml.safe_load(base_config)
+with open(base_config_file, mode="r") as base_config:
+    config_dict = yaml.safe_load(base_config)
 
-    if os.path.isfile(local_config_file):
-        with open(local_config_file, mode="r") as local_config:
-            local_config_dict = yaml.safe_load(local_config)
-        config_dict = _merge_dicts(config_dict, local_config_dict)
+if os.path.isfile(local_config_file):
+    with open(local_config_file, mode="r") as local_config:
+        local_config_dict = yaml.safe_load(local_config)
+    config_dict = _merge_dicts(config_dict, local_config_dict)
 
-    globals()["app_config"] = munch.munchify(config_dict)
+app_config = munch.munchify(config_dict)
+
+if "OAUTH_CLIENT_ID" in os.environ:
+    app_config.oauth.client_id = os.environ["OAUTH_CLIENT_ID"]
+
+if "OAUTH_CLIENT_SECRET" in os.environ:
+    app_config.oauth.client_secret = os.environ["OAUTH_CLIENT_SECRET"]
+
+if "OAUTH_REDIRECT_URI" in os.environ:
+    app_config.oauth.redirect_uri = os.environ["OAUTH_REDIRECT_URI"]
