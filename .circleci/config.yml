@@ -21,7 +21,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            make boostrap
+            make bootstrap
             make install
 
       - save_cache:
