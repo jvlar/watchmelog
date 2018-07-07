@@ -14,7 +14,7 @@ TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
 if "MONGO_CONN_STR" in os.environ:
     connect(
         os.environ["MONGO_DB_NAME"],
-        alias="watchmelog",
+        alias=os.environ["MONGO_DB_NAME"],
         host=os.environ["MONGO_CONN_STR"],
     )
 else:
