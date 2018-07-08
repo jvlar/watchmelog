@@ -8,33 +8,29 @@ from watchmelog.config import app_config
 from watchmelog.web import auth, root
 
 
-def create_app():
+package_root = pkg_resources.resource_filename("watchmelog", "")
+template_dir = os.path.join(package_root, "templates")
+static_dir = os.path.join(package_root, "static")
 
-    package_root = pkg_resources.resource_filename("watchmelog", "")
-    template_dir = os.path.join(package_root, "templates")
-    static_dir = os.path.join(package_root, "static")
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+app.secret_key = os.environ.get("SECRET_KEY", app_config.secret_key)
 
-    app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
-    app.secret_key = os.environ.get("SECRET_KEY", app_config.secret_key)
+if "MONGO_DB_NAME" in os.environ:
+    app.config["MONGODB_SETTINGS"] = {
+        "db": os.environ["MONGO_DB_NAME"],
+        "alias": "default",
+        "host": os.environ.get("MONGO_HOST"),
+        "port": int(os.environ.get("MONGO_PORT")),
+        "username": os.environ.get("MONGO_USER"),
+        "password": os.environ.get("MONGO_PASS"),
+    }
+else:
+    app.config["MONGODB_SETTINGS"] = {"db": "watchmelog"}
 
-    if "MONGO_DB_NAME" in os.environ:
-        app.config["MONGODB_SETTINGS"] = {
-            "db": os.environ["MONGO_DB_NAME"],
-            "alias": "default",
-            "host": os.environ.get("MONGO_HOST"),
-            "port": int(os.environ.get("MONGO_PORT")),
-            "username": os.environ.get("MONGO_USER"),
-            "password": os.environ.get("MONGO_PASS"),
-        }
-    else:
-        app.config["MONGODB_SETTINGS"] = {"db": "watchmelog"}
+app.register_blueprint(root.bp, url_prefix="/")
+app.register_blueprint(auth.bp, url_prefix="/auth")
 
-    app.register_blueprint(root.bp, url_prefix="/")
-    app.register_blueprint(auth.bp, url_prefix="/auth")
-
-    db.db.init_app(app)
-
-    return app
+db.db.init_app(app)
 
 
 if __name__ == "__main__":
@@ -44,10 +40,8 @@ if __name__ == "__main__":
 
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-    _app = create_app()
-
     from werkzeug.contrib.fixers import ProxyFix
 
-    _app.wsgi_app = ProxyFix(_app.wsgi_app)
+    app.wsgi_app = ProxyFix(app.wsgi_app)
 
-    _app.run(host, int(port), debug=debug)
+    app.run(host, int(port), debug=debug)

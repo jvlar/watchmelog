@@ -1,6 +1,6 @@
 {
     "dev": {
-        "app_function": "watchmelog.app.create_app",
+        "app_function": "watchmelog.app.app",
         "profile_name": "default",
         "project_name": "watchmelog",
         "runtime": "python3.6",
