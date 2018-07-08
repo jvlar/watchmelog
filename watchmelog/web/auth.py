@@ -58,7 +58,7 @@ def oauth_registration_redirect():
         client_id=app_config.oauth.client_id,
         client_secret=app_config.oauth.client_secret,
     )
-    player = create_or_update_player(token, session_state.region)
+    player = create_or_update_player(token["access_token"], session_state.region)
     api_key = ensure_api_key_for_player(player)
 
     session["api_key"] = api_key.key

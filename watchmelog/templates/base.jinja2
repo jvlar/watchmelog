@@ -7,8 +7,14 @@
             WatchMeLog
         {% endif %}
     </title>
+    <link rel="stylesheet" href="/static/vendor/sementic-ui/semantic.min.css"/>
 </head>
-<body>
+<body class="pushable">
 {% block content %}{% endblock %}
 </body>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="/static/vendor/sementic-ui/semantic.min.js"></script>
 </html>

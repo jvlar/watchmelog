@@ -1,9 +1,31 @@
 {% extends "base.jinja2" %}
 {% set page_title = "Home" %}
 {% block content %}
-    {% if battletag %}
-        Logged in as: {{ battletag }}
-    {% else %}
-        Not logged-in, <a href="/auth/login?region=us">login here</a>.
-    {% endif %}
+
+    <div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui container">
+                <h1 class="ui inverted header">
+                    WatchMeLog
+                </h1>
+                <h2>Login to start logging your Overwatch competitive matches.</h2>
+                <a class="ui huge primary button" href="{{ url_for('auth.oauth_login_redirect') }}?region=us">
+                    Login with Blizzard <i class="right arrow icon"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ui vertical stripe segment">
+            <div class="ui text container">
+                {% if battletag %}
+                    Logged in as: {{ battletag }}
+                {% else %}
+                    Not logged-in,
+                    <a href="{{ url_for('auth.oauth_login_redirect') }}?region=us">login
+                        here</a>.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

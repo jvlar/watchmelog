@@ -3,3 +3,5 @@ oauth:
   client_id: ID
   client_secret: SEKRET
   redirect_uri: https://localhost/auth/register
+
+secret_key: mXNo7O*vw81i2ztsRh0PqnHw41TKX2tkRJt0dUqE&nqwr4tv

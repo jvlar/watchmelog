@@ -19,8 +19,8 @@ class Player(db.Document):
     slug = StringField(primary_key=True)
     battletag = StringField(required=True, unique=True)
     blizzard_id = IntField(required=True)
-    default_platform = StringField(required=True, choices=PLATFORM_CHOICES)
-    default_region = StringField(choices=REGION_CHOICES)
+    default_platform = StringField(choices=PLATFORM_CHOICES)
+    default_region = StringField(required=True, choices=REGION_CHOICES)
     created_at = DateTimeField(default=utcnow)
 
     def __init__(self, *args, **kwargs):

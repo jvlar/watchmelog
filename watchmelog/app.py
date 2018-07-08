@@ -4,7 +4,8 @@ import pkg_resources
 from flask import Flask
 
 from watchmelog import db
-from watchmelog.site import auth, root
+from watchmelog.config import app_config
+from watchmelog.web import auth, root
 
 
 def create_app():
@@ -14,6 +15,7 @@ def create_app():
     static_dir = os.path.join(package_root, "static")
 
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+    app.secret_key = os.environ.get("SECRET_KEY", app_config.secret_key)
 
     if "MONGO_DB_NAME" in os.environ:
         app.config["MONGODB_SETTINGS"] = {
@@ -40,8 +42,12 @@ if __name__ == "__main__":
     port = os.environ.get("API_PORT", 5000)
     debug = os.environ.get("API_DEBUG", True)
 
-    if debug:
-        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     _app = create_app()
+
+    from werkzeug.contrib.fixers import ProxyFix
+
+    _app.wsgi_app = ProxyFix(_app.wsgi_app)
+
     _app.run(host, int(port), debug=debug)
