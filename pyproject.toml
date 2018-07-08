@@ -18,6 +18,7 @@ requests-oauthlib = "^1.0"
 munch = "^2.3"
 flask = "^1.0"
 flask-mongoengine = "^0.9.5"
+requests = "^2.19"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^18.3-alpha.0", allows-prereleases = true}

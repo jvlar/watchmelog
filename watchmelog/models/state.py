@@ -1,9 +1,10 @@
-from mongoengine import Document, StringField, DateTimeField
+from mongoengine import StringField, DateTimeField
 
 from watchmelog import utils
+from watchmelog.db import db
 
 
-class SessionState(Document):
+class SessionState(db.Document):
     state = StringField(primary_key=True)
     region = StringField(required=True)
     created = DateTimeField(default=utils.utcnow, required=True)

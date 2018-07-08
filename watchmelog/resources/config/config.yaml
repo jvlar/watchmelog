@@ -2,4 +2,4 @@
 oauth:
   client_id: ID
   client_secret: SEKRET
-  redirect_uri: https://localhost/v1/auth/registration
+  redirect_uri: https://localhost/auth/register

@@ -1,15 +1,20 @@
 import os
+import pkg_resources
 
 from flask import Flask
-from flask_mongoengine import MongoEngine
 
-from watchmelog.site import root
-
-db = MongoEngine()
+from watchmelog import db
+from watchmelog.site import auth, root
 
 
 def create_app():
-    app = Flask(__name__)
+
+    package_root = pkg_resources.resource_filename("watchmelog", "")
+    template_dir = os.path.join(package_root, "templates")
+    static_dir = os.path.join(package_root, "static")
+
+    app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+
     if "MONGO_DB_NAME" in os.environ:
         app.config["MONGODB_SETTINGS"] = {
             "db": os.environ["MONGO_DB_NAME"],
@@ -23,6 +28,9 @@ def create_app():
         app.config["MONGODB_SETTINGS"] = {"db": "watchmelog"}
 
     app.register_blueprint(root.bp, url_prefix="/")
+    app.register_blueprint(auth.bp, url_prefix="/auth")
+
+    db.db.init_app(app)
 
     return app
 
@@ -31,7 +39,9 @@ if __name__ == "__main__":
     host = os.environ.get("API_HOST", "127.0.0.1")
     port = os.environ.get("API_PORT", 5000)
     debug = os.environ.get("API_DEBUG", True)
+
     if debug:
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
     _app = create_app()
     _app.run(host, int(port), debug=debug)

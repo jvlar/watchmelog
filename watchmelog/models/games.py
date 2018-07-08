@@ -1,6 +1,8 @@
 from typing import List
 
-from watchmelog.app import db
+from mongoengine import signals
+
+from watchmelog.db import db
 from watchmelog.models.players import Player, PLATFORM_CHOICES, REGION_CHOICES
 from watchmelog.utils import update_timestamp, utcnow
 

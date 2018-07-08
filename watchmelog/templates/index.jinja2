@@ -1,0 +1,9 @@
+{% extends "base.jinja2" %}
+{% set page_title = "Home" %}
+{% block content %}
+    {% if battletag %}
+        Logged in as: {{ battletag }}
+    {% else %}
+        Not logged-in, <a href="/auth/login?region=us">login here</a>.
+    {% endif %}
+{% endblock %}
