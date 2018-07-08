@@ -1,0 +1,21 @@
+{% extends "base.jinja2" %}
+{% set page_title = "Log New Game" %}
+{% block content %}
+
+    <div class="ui raised very padded text container segment">
+        <div class="pusher">
+            {% from "_formhelpers.jinja2" import render_field %}
+            <form class="ui {{ form_status_class(form) }} form" method="post">
+                <div class="inline fields">
+                    {{ render_field(form.sr) }}
+                    {{ render_field(form.season) }}
+                </div>
+                {{ render_field(form.map) }}
+                {{ render_field(form.heroes) }}
+                <button class="ui button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
