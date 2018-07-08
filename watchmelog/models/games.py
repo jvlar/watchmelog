@@ -4,6 +4,7 @@ from mongoengine import signals
 
 from watchmelog.db import db
 from watchmelog.models.players import Player, PLATFORM_CHOICES, REGION_CHOICES
+from watchmelog.template_helpers import get_curr_season
 from watchmelog.utils import update_timestamp, utcnow
 
 MAP_CHOICES = [
@@ -60,7 +61,7 @@ HERO_CHOICES = [
 
 class Game(db.Document):
     player: Player = db.ReferenceField(Player)
-    season: int = db.IntField(min_value=1, max_value=11)
+    season: int = db.IntField(min_value=1, max_value=get_curr_season)
     sr: int = db.IntField(required=True, min_value=0, max_value=5000)
     map: str = db.StringField(choices=MAP_CHOICES)
     heroes: List[str] = db.ListField(field=db.StringField(choices=HERO_CHOICES))
