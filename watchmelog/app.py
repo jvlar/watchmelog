@@ -5,8 +5,8 @@ from flask import Flask
 
 from watchmelog import db
 from watchmelog.config import app_config
-from watchmelog.web import auth, root
-
+from watchmelog import template_helpers
+from watchmelog.web import auth, root, csv
 
 package_root = pkg_resources.resource_filename("watchmelog", "")
 template_dir = os.path.join(package_root, "templates")
@@ -29,6 +29,9 @@ else:
 
 app.register_blueprint(root.bp, url_prefix="/")
 app.register_blueprint(auth.bp, url_prefix="/auth")
+app.register_blueprint(csv.bp, url_prefix="/csv")
+
+app.jinja_env.globals.update(get_curr_season=template_helpers.get_curr_season)
 
 db.db.init_app(app)
 

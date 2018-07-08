@@ -5,3 +5,5 @@ oauth:
   redirect_uri: https://localhost/auth/register
 
 secret_key: mXNo7O*vw81i2ztsRh0PqnHw41TKX2tkRJt0dUqE&nqwr4tv
+
+current_season: 11

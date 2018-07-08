@@ -1,0 +1,19 @@
+{% extends "base.jinja2" %}
+{% set page_title = "Import Matches" %}
+{% set current_season = get_curr_season() %}
+{% block content %}
+    Import matches from a CSV file
+
+    <form class="ui form" method="post" action="{{ url_for('csv.import_csv') }}" name="csv_import">
+        <div class="field">
+            <label>Season</label>
+            <input type="number" name="season" placeholder="{{ current_season }}" min="1" max="{{ current_season }}">
+        </div>
+        <div class="field">
+            <label>CSV File</label>
+            <input type="file" id="csv_file" accept="text/csv">
+        </div>
+        <button class="ui button green" type="submit">Import Matches</button>
+    </form>
+
+{% endblock %}
