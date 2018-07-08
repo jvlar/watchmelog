@@ -37,6 +37,8 @@ app.jinja_env.globals.update(
     form_status_class=template_helpers.form_status_class,
 )
 
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
+
 db.db.init_app(app)
 
 
