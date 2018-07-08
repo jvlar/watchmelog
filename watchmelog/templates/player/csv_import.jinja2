@@ -9,11 +9,17 @@
                     Import matches from a CSV file
 
                     <form class="ui form {% if errors %}error{% endif %}" method="post"
-                          action="{{ url_for('csv.import_csv') }}" enctype="multipart/form-data">
+                          action="{{ url_for('csv.import_csv') }}"
+                          enctype="multipart/form-data">
                         {% if errors %}
-                            {% for error in errors %}
-                                <div class="ui message error">{{ error }}</div>
-                            {% endfor %}
+                            <div class="ui message error">
+                                Issues importing your CSV
+                                <ul>
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         {% endif %}
                         <div class="field">
                             <label>Season</label>

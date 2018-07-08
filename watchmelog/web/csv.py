@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request
-import csv
-import io
+from flask import Blueprint, render_template, request, session, redirect, url_for
 
 from watchmelog.config import app_config
+from watchmelog.core.csv import import_raw_csv
+from watchmelog.core.player import get_player_from_api_key
 from watchmelog.web.utils import needs_auth, allowed_file
 
 bp = Blueprint("csv", __name__)
@@ -41,10 +41,15 @@ def import_csv():
                 ctx["errors"].append("File extension must be '.csv'")
                 raise ValueError
 
+            player = get_player_from_api_key(session["api_key"])
             season = request.form["season"]
-            matches = csv.DictReader(
-                io.StringIO(request.files["csv_file"].stream.read().decode("utf-8"))
-            )
+            raw_matches = request.files["csv_file"].stream.read().decode("utf-8")
+
+            success, errors = import_raw_csv(player, season, raw_matches)
+            if not success:
+                ctx["errors"] = errors
+                raise ValueError
+            return redirect(url_for("root.root"))
         except ValueError:
             return render_template("player/csv_import.jinja2", **ctx)
 

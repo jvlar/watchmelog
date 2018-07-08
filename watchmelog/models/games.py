@@ -24,7 +24,7 @@ MAP_CHOICES = [
     "Rialto",
     "Route 66",
     "Temple of Anubis",
-    "Volskaya Industry",
+    "Volskaya Industries",
     "Watchpoint: Gibraltar",
 ]
 
@@ -34,7 +34,7 @@ HERO_CHOICES = [
     "Pharah",
     "Reaper",
     "McCree",
-    "Solder: 76",
+    "Soldier: 76",
     "Widowmaker",
     "Genji",
     "Sombra",
@@ -58,11 +58,15 @@ HERO_CHOICES = [
     "Torbjorn",
 ]
 
+RESULT_CHOICES = ["win", "loss", "draw"]
+
 
 class Game(db.Document):
     player: Player = db.ReferenceField(Player)
-    season: int = db.IntField(min_value=1, max_value=get_curr_season)
-    sr: int = db.IntField(required=True, min_value=0, max_value=5000)
+    season: int = db.IntField(min_value=1, max_value=get_curr_season())
+    sr: int = db.IntField(min_value=0, max_value=5000)
+    result: str = db.StringField(choices=RESULT_CHOICES)
+    placement: bool = db.BooleanField(default=False)
     map: str = db.StringField(choices=MAP_CHOICES)
     heroes: List[str] = db.ListField(field=db.StringField(choices=HERO_CHOICES))
     comment: str = db.StringField()
