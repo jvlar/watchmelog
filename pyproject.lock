@@ -1,34 +1,4 @@
 [[package]]
-category = "main"
-description = "Blazingly fast & beautifully expressive Web APIs"
-name = "apistar"
-optional = false
-platform = "*"
-python-versions = "*"
-version = "0.5.40"
-
-[package.dependencies]
-click = "*"
-jinja2 = "*"
-pyyaml = "*"
-requests = "*"
-werkzeug = "*"
-whitenoise = "*"
-
-[[package]]
-category = "main"
-description = "CORS support for API Star via event hooks."
-name = "apistar-cors-hooks"
-optional = false
-platform = "*"
-python-versions = ">=3.6"
-version = "0.1.1"
-
-[package.dependencies]
-apistar = ">=0.4"
-wsgicors = ">=0.7,<0.8"
-
-[[package]]
 category = "dev"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 name = "appdirs"
@@ -88,15 +58,6 @@ optional = false
 platform = "UNKNOWN"
 python-versions = "*"
 version = "0.1.0"
-
-[[package]]
-category = "main"
-description = "backports.functools_lru_cache"
-name = "backports.functools-lru-cache"
-optional = false
-platform = "*"
-python-versions = ">=2.6"
-version = "1.5"
 
 [[package]]
 category = "main"
@@ -266,6 +227,21 @@ version = "0.5"
 
 [[package]]
 category = "main"
+description = "A simple framework for building complex web applications."
+name = "flask"
+optional = false
+platform = "any"
+python-versions = "*"
+version = "1.0.2"
+
+[package.dependencies]
+Jinja2 = ">=2.10"
+Werkzeug = ">=0.14"
+click = ">=5.1"
+itsdangerous = ">=0.24"
+
+[[package]]
+category = "main"
 description = "Clean single-source support for Python 3 and 2"
 name = "future"
 optional = false
@@ -340,6 +316,15 @@ optional = false
 platform = "Linux"
 python-versions = "*"
 version = "0.2.0"
+
+[[package]]
+category = "main"
+description = "Various helpers to pass trusted data to untrusted environments and back."
+name = "itsdangerous"
+optional = false
+platform = "UNKNOWN"
+python-versions = "*"
+version = "0.24"
 
 [[package]]
 category = "dev"
@@ -758,33 +743,12 @@ version = "0.31.1"
 
 [[package]]
 category = "main"
-description = "Radically simplified static file serving for WSGI applications"
-name = "whitenoise"
-optional = false
-platform = "*"
-python-versions = "*"
-version = "3.3.1"
-
-[[package]]
-category = "main"
 description = "Apache-like combined logging for WSGI Web Applications"
 name = "wsgi-request-logger"
 optional = false
 platform = "any"
 python-versions = "*"
 version = "0.4.6"
-
-[[package]]
-category = "main"
-description = "WSGI for Cross Origin Resource Sharing (CORS)"
-name = "wsgicors"
-optional = false
-platform = "UNKNOWN"
-python-versions = "*"
-version = "0.7.0"
-
-[package.dependencies]
-"backports.functools_lru_cache" = ">=1.0"
 
 [[package]]
 category = "main"
@@ -821,20 +785,17 @@ wheel = ">=0.30.0"
 wsgi-request-logger = "0.4.6"
 
 [metadata]
-content-hash = "43cf892bcd56a7332d14ac77e014af1db7a560dcd0237a5f96f497b37da7cf41"
+content-hash = "931d9b050fe99c4cbdcb34c84b9b80d0b3ed02dfecdab618214bb10c1b2d2cab"
 platform = "*"
 python-versions = "3.6"
 
 [metadata.hashes]
-apistar = ["9158cbdc0449751f0efbc98800546c1cd212f1ff6f8b2a11d2f9df4fcf943110"]
-apistar-cors-hooks = ["7e4cb7d62ed0348993cce9845df08ba39538269ebf5d9e2dc2c551fd20946d6d", "f675de38bc550b3238b8a5ece39b2caf32a29292eb10bd67d562a7dc847c8cbd"]
 appdirs = ["9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92", "d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"]
 appnope = ["5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0", "8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"]
 argcomplete = ["c079ceb0b72d4d4e03531ed77e6071babb9d42c3f790d7def2c41295b4990b44", "d97b7f3cfaa4e494ad59ed6d04c938fc5ed69b590bd8f53274e258fb1119bd1b"]
 attrs = ["4b90b09eeeb9b88c35bc642cbac057e45a5fd85367b985bd2809c62b7b939265", "e0d0eb91441a3b53dab4d9b743eafc1ac44476296a2053b6ca3af0b139faf87b"]
 awesome-slugify = ["bbdec3fa2187917473a2efad092b57f7125a55f841a7cf6a1773178d32ccfd71"]
 backcall = ["38ecd85be2c1e78f77fd91700c76e14667dc21e2713b63876c0eb901196e01e4", "bbbf4b1e5cd2bdb08f915895b51081c041bac22394fdfcfdfbe9f14b77c08bf2"]
-"backports.functools-lru-cache" = ["9d98697f088eb1b0fa451391f91afb5e3ebde16bbdb272819fd091151fda4f1a", "f0b0e4eba956de51238e17573b7087e852dfe9854afd2e9c873f73fc0ca0a6dd"]
 base58 = ["93fa54b615a7c406701a56e3d11c3a5defdbcd371f36c0452f1ac77623e42d16", "c5fe8b00fab798b4a3393da6235bdecb143db505833e3f979890f7c6fc99f651"]
 bcrypt = ["01477981abf74e306e8ee31629a940a5e9138de000c6b0898f7f850461c4a0a5", "054d6e0acaea429e6da3613fcd12d05ee29a531794d96f6ab959f29a39f33391", "0872eeecdf9a429c1420158500eedb323a132bc5bf3339475151c52414729e70", "09a3b8c258b815eadb611bad04ca15ec77d86aa9ce56070e1af0d5932f17642a", "0f317e4ffbdd15c3c0f8ab5fbd86aa9aabc7bea18b5cc5951b456fe39e9f738c", "2788c32673a2ad0062bea850ab73cffc0dba874db10d7a3682b6f2f280553f20", "321d4d48be25b8d77594d8324c0585c80ae91ac214f62db9098734e5e7fb280f", "346d6f84ff0b493dbc90c6b77136df83e81f903f0b95525ee80e5e6d5e4eef84", "34dd60b90b0f6de94a89e71fcd19913a30e83091c8468d0923a93a0cccbfbbff", "3b4c23300c4eded8895442c003ae9b14328ae69309ac5867e7530de8bdd7875d", "43d1960e7db14042319c46925892d5fa99b08ff21d57482e6f5328a1aca03588", "49e96267cd9be55a349fd74f9852eb9ae2c427cd7f6455d0f1765d7332292832", "63e06ffdaf4054a89757a3a1ab07f1b922daf911743114a54f7c561b9e1baa58", "67ed1a374c9155ec0840214ce804616de49c3df9c5bc66740687c1c9b1cd9e8d", "6b662a5669186439f4f583636c8d6ea77cf92f7cfe6aae8d22edf16c36840574", "6efd9ca20aefbaf2e7e6817a2c6ed4a50ff6900fafdea1bcb1d0e9471743b144", "8569844a5d8e1fdde4d7712a05ab2e6061343ac34af6e7e3d7935b2bd1907bfd", "8629ea6a8a59f865add1d6a87464c3c676e60101b8d16ef404d0a031424a8491", "988cac675e25133d01a78f2286189c1f01974470817a33eaf4cfee573cfb72a5", "9a6fedda73aba1568962f7543a1f586051c54febbc74e87769bad6a4b8587c39", "9eced8962ce3b7124fe20fd358cf8c7470706437fa064b9874f849ad4c5866fc", "a005ed6163490988711ff732386b08effcbf8df62ae93dd1e5bda0714fad8afb", "ae35dbcb6b011af6c840893b32399252d81ff57d52c13e12422e16b5fea1d0fb", "b1e8491c6740f21b37cca77bc64677696a3fb9f32360794d57fa8477b7329eda", "c906bdb482162e9ef48eea9f8c0d967acceb5c84f2d25574c7d2a58d04861df1", "cb18ffdc861dbb244f14be32c47ab69604d0aca415bee53485fcea4f8e93d5ef", "cc2f24dc1c6c88c56248e93f28d439ee4018338567b0bbb490ea26a381a29b1e", "d860c7fff18d49e20339fc6dffc2d485635e36d4b2cccf58f45db815b64100b4", "d86da365dda59010ba0d1ac45aa78390f56bf7f992e65f70b3b081d5e5257b09", "e22f0997622e1ceec834fd25947dc2ee2962c2133ea693d61805bc867abaf7ea", "f2fe545d27a619a552396533cddf70d83cecd880a611cdfdbb87ca6aec52f66b", "f425e925485b3be48051f913dbe17e08e8c48588fdf44a26b8b14067041c0da6", "f7fd3ed3745fe6e81e28dc3b3d76cce31525a91f32a387e1febd6b982caf8cdb", "f9210820ee4818d84658ed7df16a7f30c9fba7d8b139959950acef91745cc0f7"]
 black = ["22158b89c1a6b4eb333a1e65e791a3f8b998cf3b11ae094adb2570f31f769a44", "4b475bbd528acce094c503a3d2dbc2d05a4075f6d0ef7d9e7514518e14cc5191"]
@@ -850,12 +811,14 @@ colorama = ["463f8483208e921368c9f306094eb6f725c6ca42b0f97e313cb5d5512459feda", 
 decorator = ["2c51dff8ef3c447388fe5e4453d24a2bf128d3a4c32af3fabef1f01c6851ab82", "c39efa13fbdeb4506c476c9b3babf6a718da943dab7811c206005a4a956c080c"]
 docutils = ["02aec4bd92ab067f6ff27a38a38a41173bf01bed8f89157768c1573f53e474a6", "51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274", "7a4bd47eaf6596e1295ecb11361139febe29b084a87bf005bf899f9a42edc3c6"]
 durationpy = ["5ef9416b527b50d722f34655becfb75e49228eb82f87b855ed1911b3314b5408"]
+flask = ["2271c0070dbcb5275fad4a82e29f23ab92682dc45f9dfbc22c02ba9b9322ce48", "a080b744b7e345ccfcbc77954861cb05b3c63786e93f2b3875e0913d44b43f05"]
 future = ["e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb"]
 futures = ["51ecb45f0add83c806c68e4b06106f90db260585b25ef2abfcda0bd95c0132fd", "c4884a65654a7c45435063e14ae85280eb1f111d94e542396717ba9828c4337f"]
 hjson = ["1d1727faa6aaef2973921877125a3ab7c5f6d34b93233179d01770f41fab51f9"]
 idna = ["156a6814fb5ac1fc6850fb002e0852d56c0c8d2531923a51032d1b70760e186e", "684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16"]
 ipython = ["a0c96853549b246991046f32d19db7140f5b1a644cc31f0dc1edc86713b7676f", "eca537aa61592aca2fef4adea12af8e42f5c335004dfa80c78caf80e8b525e5c"]
 ipython-genutils = ["72dd37233799e619666c9f639a9da83c34013a73e8bbc79a7a6348d93c61fab8", "eb2e116e75ecef9d4d228fdc66af54269afa26ab4463042e33785b887c628ba8"]
+itsdangerous = ["cbb3fcf8d3e33df861709ecaf89d9e6629cff0a217bc2848f1b41cd30d360519"]
 jedi = ["b409ed0f6913a701ed474a614a3bb46e6953639033e31f769ca7581da5bd1ec1", "c254b135fb39ad76e78d4d8f92765ebc9bf92cbc76f49e97ade1d5f5121e1f6f"]
 jinja2 = ["74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd", "f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"]
 jmespath = ["6a81d4c9aa62caf061cb517b4d9ad1dd300374cd4706997aff9cd6aedd61fc64", "f11b4461f425740a1d908e9a3f7365c3d2e569f6ca68a2ff8bc5bcd9676edd63"]
@@ -895,7 +858,5 @@ urllib3 = ["a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf", "
 wcwidth = ["3df37372226d6e63e1b1e1eda15c594bca98a22d33a23832a90998faa96bc65e", "f4ebe71925af7b40a864553f761ed559b43544f8f71746c2d756c7fe788ade7c"]
 werkzeug = ["c3fd7a7d41976d9f44db327260e263132466836cef6f91512889ed60ad26557c", "d5da73735293558eb1651ee2fddc4d0dedcfa06538b8813a2e20011583c9e49b"]
 wheel = ["0a2e54558a0628f2145d2fc822137e322412115173e8a2ddbe1c9024338ae83c", "80044e51ec5bbf6c894ba0bc48d26a8c20a9ba629f4ca19ea26ecfcf87685f5f"]
-whitenoise = ["15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf", "9d81515f2b5b27051910996e1e860b1332e354d9e7bcf30c98f21dcb6713e0dd"]
 wsgi-request-logger = ["445d7ec52799562f812006394d0b4a7064b37084c6ea6bd74ea7a2136c97ed83"]
-wsgicors = ["ccab43d60f02971d548f24209939818bb85fddf9367d4668e0db787b071f3d99"]
 zappa = ["cb70195801efb8ae50c78d5180640afe1bcb9317d3c11da97b6d3588b90aea89", "d841b2ca57c80c2fe5cd9098763ab26f59580658838eb77fcdefeed894543d45"]

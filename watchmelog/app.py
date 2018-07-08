@@ -1,12 +1,9 @@
 import os
 
-from apistar import App, Include
-from apistar_cors_hooks import CORSRequestHooks
+from flask import Flask
 from mongoengine import connect
 
-from watchmelog import web
-from watchmelog.api.v1.auth import AuthComponent
-from watchmelog.api.v1.views import players as v1_players
+from watchmelog.site import root
 
 
 if "MONGO_DB_NAME" in os.environ:
@@ -21,12 +18,14 @@ if "MONGO_DB_NAME" in os.environ:
 else:
     connect("watchmelog")
 
-routes = [
-    Include("/v1/auth", name="v1 Auth", routes=web.routes, documented=False),
-    Include("/v1/players", name="v1 Player", routes=v1_players.routes),
-]
 
-app = App(routes=routes, components=[AuthComponent()], event_hooks=[CORSRequestHooks()])
+def create_app():
+    app = Flask(__name__)
+
+    app.register_blueprint(root.bp, url_prefix="/")
+
+    return app
+
 
 if __name__ == "__main__":
     host = os.environ.get("API_HOST", "127.0.0.1")
@@ -34,4 +33,5 @@ if __name__ == "__main__":
     debug = os.environ.get("API_DEBUG", True)
     if debug:
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-    app.serve(host, int(port), debug=debug)
+    _app = create_app()
+    _app.run(host, int(port), debug=debug)

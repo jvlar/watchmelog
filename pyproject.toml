@@ -7,17 +7,16 @@ license = "WTFPL"
 
 [tool.poetry.dependencies]
 python = "3.6"
-apistar = "^0.5.40"
 mongoengine = "^0.15.0"
 pendulum = "^2.0"
 awesome-slugify = "^1.6"
 bcrypt = "^3.1"
 ujson = "^1.35"
 zappa = "^0.46.1"
-apistar_cors_hooks = "^0.1.1"
 blinker = "^1.4"
 requests-oauthlib = "^1.0"
 munch = "^2.3"
+flask = "^1.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^18.3-alpha.0", allows-prereleases = true}
