@@ -1,26 +1,26 @@
 import os
 
 from flask import Flask
-from mongoengine import connect
+from flask_mongoengine import MongoEngine
 
 from watchmelog.site import root
 
-
-if "MONGO_DB_NAME" in os.environ:
-    connect(
-        os.environ["MONGO_DB_NAME"],
-        alias="default",
-        host=os.environ.get("MONGO_HOST"),
-        port=int(os.environ.get("MONGO_PORT")),
-        username=os.environ.get("MONGO_USER"),
-        password=os.environ.get("MONGO_PASS"),
-    )
-else:
-    connect("watchmelog")
+db = MongoEngine()
 
 
 def create_app():
     app = Flask(__name__)
+    if "MONGO_DB_NAME" in os.environ:
+        app.config["MONGODB_SETTINGS"] = {
+            "db": os.environ["MONGO_DB_NAME"],
+            "alias": "default",
+            "host": os.environ.get("MONGO_HOST"),
+            "port": int(os.environ.get("MONGO_PORT")),
+            "username": os.environ.get("MONGO_USER"),
+            "password": os.environ.get("MONGO_PASS"),
+        }
+    else:
+        app.config["MONGODB_SETTINGS"] = {"db": "watchmelog"}
 
     app.register_blueprint(root.bp, url_prefix="/")
 
